@@ -52,7 +52,7 @@ const updateExpense = async (req, res) => {
     if (req.body?.gst) expense.gst = req.body.gst;
     if (req.body?.totalBillAmount) expense.totalBillAmount = req.body.totalBillAmount;
 
-    const result = await Expense.save();
+    const result = await expense.save();
     res.json({ success: true, result: result });
 };
 

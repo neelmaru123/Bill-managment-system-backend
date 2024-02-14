@@ -12,10 +12,12 @@ const {
 router
   .route("/bill")
   .get(getAllBills)
-  .post(createNewBill)
+  .post(createNewBill);
+
+router
+  .route("/bill/:id")
+  .get(getBillById)
   .put(updateBill)
   .delete(deleteBill);
-
-router.route("/bill/:id").get(getBillById);
-
+  
 module.exports = router;

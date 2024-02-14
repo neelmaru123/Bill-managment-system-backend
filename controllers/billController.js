@@ -2,6 +2,7 @@
 const Bill = require("../model/Bill");
 
 const getAllBills = async (req, res) => {
+    console.log("getAllBills");
     const bills = await Bill.find();
     if (!bills) {
         return res.status(204).json({ message: "No Bill Found!" });
@@ -45,13 +46,13 @@ const updateBill = async (req, res) => {
             .json({ message: `ID: ${req.body.id} does not match` });
     }
 
-    if (req.body?.billNo) newBill.billNo = req.body.billNo;
-    if (req.body?.companyName) newBill.companyName = req.body.companyName;
-    if (req.body?.productDetails) newBill.productDetails = req.body.productDetails;
-    if (req.body?.date) newBill.date = req.body.date;
-    if (req.body?.totalAmount) newBill.totalAmount = req.body.totalAmount;
-    if (req.body?.gst) newBill.gst = req.body.gst;
-    if (req.body?.totalBillAmount) newBill.totalBillAmount = req.body.totalBillAmount;
+    if (req.body?.billNo) bill.billNo = req.body.billNo;
+    if (req.body?.companyName) bill.companyName = req.body.companyName;
+    if (req.body?.productDetails) bill.productDetails = req.body.productDetails;
+    if (req.body?.date) bill.date = req.body.date;
+    if (req.body?.totalAmount) bill.totalAmount = req.body.totalAmount;
+    if (req.body?.gst) bill.gst = req.body.gst;
+    if (req.body?.totalBillAmount) bill.totalBillAmount = req.body.totalBillAmount;
 
     const result = await bill.save();
     res.json({ success: true, result: result });
@@ -70,7 +71,7 @@ const deleteBill = async (req, res) => {
             .json({ message: `ID: ${req.body.id} does not match` });
     }
 
-    const result = await bill.deleteOne({ _id: req.body.id });
+    const result = await bill.remove();
     res.json({ success: true, result: result });
 };
 
