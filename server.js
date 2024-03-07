@@ -43,73 +43,78 @@ mongoose.connection.once("open", () => {
   app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 })
 
-app.post("/bill", async (req, res) => {
-  // console.log(req.body.billNo, req.body.companyName);
-  console.log(req.body);
-  if (!req?.body?.billNo || !req?.body?.companyName) {
-    return res
-      .status(400)
-      .json({ message: "BillNo and companyName is required" });;
-  }
+billRoute = require("./routes/bill");
+expenceRoute = require("./routes/expense");
 
-  const newBill = {};
-  if (req.body?.billNo) newBill.billNo = req.body.billNo;
-  if (req.body?.companyName) newBill.companyName = req.body.companyName;
-  if (req.body?.productDetails) newBill.productDetails = req.body.productDetails;
-  if (req.body?.date) newBill.date = req.body.date;
-  if (req.body?.totalAmount) newBill.totalAmount = req.body.totalAmount;
-  if (req.body?.gst) newBill.gst = req.body.gst;
-  if (req.body?.totalBillAmount) newBill.totalBillAmount = req.body.totalBillAmount;
+app.use("/bill", billRoute);
+app.use("/expense", expenceRoute);
 
-  try {
-    const result = await Bill.create(newBill);
-    res.status(201).json({ success: true });
-  } catch (error) {
-    res.json({ message: error.message });
-  }
-});
+// app.post("/bill", async (req, res) => {
+//   // console.log(req.body.billNo, req.body.companyName);
+//   console.log(req.body);
+//   if (!req?.body?.billNo || !req?.body?.companyName) {
+//     return res
+//       .status(400)
+//       .json({ message: "BillNo and companyName is required" });;
+//   }
 
-app.get("/bill", async (req, res) => {
-  console.log("getAllBills");
-  const bills = await Bill.find();
-  if (!bills) {
-    return res.status(204).json({ message: "No Bill Found!" });
-  }
-  res.json(bills);
-});
+//   const newBill = {};
+//   if (req.body?.billNo) newBill.billNo = req.body.billNo;
+//   if (req.body?.companyName) newBill.companyName = req.body.companyName;
+//   if (req.body?.productDetails) newBill.productDetails = req.body.productDetails;
+//   if (req.body?.date) newBill.date = req.body.date;
+//   if (req.body?.totalAmount) newBill.totalAmount = req.body.totalAmount;
+//   if (req.body?.gst) newBill.gst = req.body.gst;
+//   if (req.body?.totalBillAmount) newBill.totalBillAmount = req.body.totalBillAmount;
 
-app.get("/bill/:id", async (req, res) => {
-  if (!req?.params?.id) {
-    return res.status(400).json({ message: "ID is required" });
-  }
+//   try {
+//     const result = await Bill.create(newBill);
+//     res.status(201).json({ success: true });
+//   } catch (error) {
+//     res.json({ message: error.message });
+//   }
+// });
 
-  const bill = await Bill.findOne({ _id: req.params.id }).exec();
+// app.get("/bill", async (req, res) => {
+//   console.log("getAllBills");
+//   const bills = await Bill.find();
+//   if (!bills) {
+//     return res.status(204).json({ message: "No Bill Found!" });
+//   }
+//   res.json(bills);
+// });
 
-  if (!bill) {
-    return res
-      .status(204)
-      .json({ message: `ID: ${req.params.id} does not match` });
-  }
+// app.get("/bill/:id", async (req, res) => {
+//   if (!req?.params?.id) {
+//     return res.status(400).json({ message: "ID is required" });
+//   }
 
-  res.json(bill);
-});
+//   const bill = await Bill.findOne({ _id: req.params.id }).exec();
 
-app.delete("/bill/:id", async (req, res) => {
-  if (!req?.params?.id) {
-    return res.status(400).json({ message: "ID is required" });
-  }
+//   if (!bill) {
+//     return res
+//       .status(204)
+//       .json({ message: `ID: ${req.params.id} does not match` });
+//   }
 
-  const bill = await Bill.findOne({ _id: req.params.id }).exec();
+//   res.json(bill);
+// });
 
-  if (!bill) {
-    return res
-      .status(204)
-      .json({ message: `ID: ${req.params.id} does not match` });
-  }
+// app.delete("/bill/:id", async (req, res) => {
+//   if (!req?.params?.id) {
+//     return res.status(400).json({ message: "ID is required" });
+//   }
 
-  const result = await bill.deleteOne();
-  res.json({ success: true, result: result });
-});
+//   const bill = await Bill.findOne({ _id: req.params.id }).exec();
 
-// app.use("/bill", require("./routes/bill"));
-// app.use("/expense", require("./routes/expense"));
+//   if (!bill) {
+//     return res
+//       .status(204)
+//       .json({ message: `ID: ${req.params.id} does not match` });
+//   }
+
+//   const result = await bill.deleteOne();
+//   res.json({ success: true, result: result });
+// });
+
+

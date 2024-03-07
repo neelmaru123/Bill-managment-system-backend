@@ -10,7 +10,7 @@ const {
 } = require("../controllers/billController");
 
 router
-  .route("/bill")
+  .route("/")
   .get(getAllBills)
   .post(createNewBill);
 

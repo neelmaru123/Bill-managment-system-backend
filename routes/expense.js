@@ -10,7 +10,7 @@ const {
 } = require("../controllers/ExpenseController");
 
 router
-  .route("/expense")
+  .route("/")
   .get(getAllExpenses)
   .post(createNewExpense)
   .put(updateExpense)
