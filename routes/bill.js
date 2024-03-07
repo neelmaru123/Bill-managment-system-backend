@@ -15,7 +15,7 @@ router
   .post(createNewBill);
 
 router
-  .route("/bill/:id")
+  .route("/:id")
   .get(getBillById)
   .put(updateBill)
   .delete(deleteBill);

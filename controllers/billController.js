@@ -77,6 +77,7 @@ const deleteBill = async (req, res) => {
 };
 
 const getBillById = async (req, res) => {
+    console.log("getBillById");
     if (!req?.params?.id) {
         return res.status(400).json({ message: "ID is required" });
     }

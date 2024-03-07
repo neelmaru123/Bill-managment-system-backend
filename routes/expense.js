@@ -16,6 +16,6 @@ router
   .put(updateExpense)
   .delete(deleteExpense);
 
-router.route("/expense/:id").get(getExpenseById);
+router.route("/:id").get(getExpenseById);
 
 module.exports = router;
