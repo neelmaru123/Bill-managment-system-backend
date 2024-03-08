@@ -22,9 +22,14 @@ const createNewBill = async (req, res) => {
     if (req.body?.companyName) newBill.companyName = req.body.companyName;
     if (req.body?.productDetails) newBill.productDetails = req.body.productDetails;
     if (req.body?.date) newBill.date = req.body.date;
-    if (req.body?.totalAmount) newBill.totalAmount = req.body.totalAmount;
-    if (req.body?.gst) newBill.gst = req.body.gst;
     if (req.body?.totalBillAmount) newBill.totalBillAmount = req.body.totalBillAmount;
+    if (req.body?.gst) newBill.gst = req.body.gst;
+    if (req.body?.amount) newBill.amount = req.body.amount;
+    if (req.body?.paidAmount) newBill.paidAmount = req.body.paidAmount;
+    if (req.body?.dueAmount) newBill.dueAmount = req.body.dueAmount;
+    if (req.body?.gtsPercent) newBill.gtsPercent = req.body.gtsPercent;
+    if (req.body?.days) newBill.days = req.body.days;
+
 
     try {
         const result = await Bill.create(newBill);
@@ -35,49 +40,55 @@ const createNewBill = async (req, res) => {
 };
 
 const updateBill = async (req, res) => {
-    if (!req?.body?.id) {
+    if (!req?.params?.id) {
         return res.status(400).json({ message: "ID is required" });
     }
 
-    const bill = await Bill.findOne({ _id: req.body.id }).exec();
+    const bill = await Bill.findOne({ _id: req.params.id }).exec();
 
     if (!bill) {
         return res
             .status(204)
-            .json({ message: `ID: ${req.body.id} does not match` });
+            .json({ message: `ID: ${req.params.id} does not match` });
     }
 
     if (req.body?.billNo) bill.billNo = req.body.billNo;
     if (req.body?.companyName) bill.companyName = req.body.companyName;
     if (req.body?.productDetails) bill.productDetails = req.body.productDetails;
     if (req.body?.date) bill.date = req.body.date;
-    if (req.body?.totalAmount) bill.totalAmount = req.body.totalAmount;
-    if (req.body?.gst) bill.gst = req.body.gst;
     if (req.body?.totalBillAmount) bill.totalBillAmount = req.body.totalBillAmount;
+    if (req.body?.gst) bill.gst = req.body.gst;
+    if (req.body?.amount) bill.amount = req.body.amount;
+    if (req.body?.paidAmount) bill.paidAmount = req.body.paidAmount;
+    if (req.body?.dueAmount) bill.dueAmount = req.body.dueAmount;
+    if (req.body?.gtsPercent) bill.gtsPercent = req.body.gtsPercent;
+    if (req.body?.days) bill.days = req.body.days;
 
     const result = await bill.save();
     res.json({ success: true, result: result });
 };
 
 const deleteBill = async (req, res) => {
-    if (!req?.body?.id) {
+    console.log(req.params.id)
+    if (!req?.params?.id) {
         return res.status(400).json({ message: "ID is required" });
     }
 
-    const bill = await Bill.findOne({ _id: req.body.id }).exec();
+    const bill = await Bill.findOne({ _id: req.params.id }).exec();
 
     if (!bill) {
         return res
             .status(204)
-            .json({ message: `ID: ${req.body.id} does not match` });
+            .json({ message: `ID: ${req.params.id} does not match` });
     }
 
-    const result = await bill.remove();
+    const result = await bill.deleteOne({_id : req.params.id}).exec();
     res.json({ success: true, result: result });
 };
 
 const getBillById = async (req, res) => {
     console.log("getBillById");
+    
     if (!req?.params?.id) {
         return res.status(400).json({ message: "ID is required" });
     }

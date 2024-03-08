@@ -16,13 +16,25 @@ const billSchema = new Schema({
   date: {
     type: Date,
   },
-  totalAmount: {
+  amount: {
+    type: Number,
+  },
+  paidAmount: {
+    type: Number,
+  },
+  dueAmount: {
     type: Number,
   },
   gst: {
     type: Number,
   },
   totalBillAmount: {
+    type: Number,
+  },
+  gtsPercent: {
+    type: Number,
+  },
+  days: {
     type: Number,
   },
 });
